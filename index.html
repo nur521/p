@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web App</title>
+    <script>
+        // Функция для извлечения параметров из URL
+        function getParameterByName(name, url = window.location.href) {
+            name = name.replace(/[\[\]]/g, '\\$&');
+            let regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)');
+            let results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, ' '));
+        }
+
+        // Функция для отображения имени пользователя на странице
+        function displayUsername() {
+            const username = getParameterByName('username');
+            if (username) {
+                document.getElementById('username').textContent = username;
+            } else {
+                document.getElementById('username').textContent = "Гость";  // Если параметра нет, выводим "Гость"
+            }
+        }
+        
+        // Выполняем функцию при загрузке страницы
+        window.onload = displayUsername;
+    </script>
+</head>
+<body>
+    <h1>Hello, <span id="username">Гость</span>!</h1>
+</body>
+</html>
