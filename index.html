@@ -15,21 +15,43 @@
             return decodeURIComponent(results[2].replace(/\+/g, ' '));
         }
 
-        // Функция для отображения имени пользователя на странице
-        function displayUsername() {
-            const username = getParameterByName('username');
-            if (username) {
-                document.getElementById('username').textContent = username;
-            } else {
-                document.getElementById('username').textContent = "Гость";  // Если параметра нет, выводим "Гость"
-            }
+        // Функция для отображения данных пользователя на странице
+        function displayUserInfo() {
+            const username = getParameterByName('username') || "Гость";
+            const userId = getParameterByName('user_id') || "Неизвестно";
+            const balance = getParameterByName('balance') || "0";
+            const remainingTokens = getParameterByName('remaining_tokens') || "Неизвестно";
+            const referrals = getParameterByName('referrals') || "0";
+
+            document.getElementById('username').textContent = username;
+            document.getElementById('user_id').textContent = userId;
+            document.getElementById('balance').textContent = balance;
+            document.getElementById('remaining_tokens').textContent = remainingTokens;
+            document.getElementById('referrals').textContent = referrals;
         }
-        
+
         // Выполняем функцию при загрузке страницы
-        window.onload = displayUsername;
+        window.onload = displayUserInfo;
     </script>
 </head>
 <body>
     <h1>Hello, <span id="username">Гость</span>!</h1>
+    <p>Your Telegram ID: <span id="user_id">Неизвестно</span></p>
+    <p>Your total balance: <span id="balance">0</span> MineCoins</p>
+    <p>Total remaining tokens: <span id="remaining_tokens">Неизвестно</span> MineCoins</p>
+
+    <h3>Referrals</h3>
+    <p>Referrals count: <span id="referrals">0</span></p>
+
+    <button onclick="showReferralLink()">Show Referral Link</button>
+
+    <script>
+        // Функция для показа реферальной ссылки
+        function showReferralLink() {
+            const userId = getParameterByName('user_id') || "Неизвестно";
+            const referralLink = `https://t.me/Practice_app_bot?start=${userId}`;
+            alert(`Your referral link: ${referralLink}`);
+        }
+    </script>
 </body>
 </html>
